@@ -6,9 +6,34 @@
 </head>
 
 <body>
-    <div>Teachable Machine Image Model</div>
+    <div>내 얼굴과 어울리는 학과는?</div>
     <button type="button" onclick="init()">Start</button>
-    <div id="webcam-container"></div>
+    <button type="button" onclick="predict()">예측</button>
+
+    <h2>File Upload & Image Preview</h2>
+    <p class="lead">No Plugins <b>Just Javascript</b></p>
+
+    <!-- Upload  -->
+    <form id="file-upload-form" class="uploader">
+        <input id="file-upload" type="file" name="fileUpload" accept="image/*" />
+
+        <label for="file-upload" id="file-drag">
+            <img id="file-image" src="#" alt="Preview" class="hidden">
+            <div id="start">
+                <i class="fa fa-download" aria-hidden="true"></i>
+                <div>Select a file or drag here</div>
+                <div id="notimage" class="hidden">Please select an image2222</div>
+                <span id="file-upload-btn" class="btn btn-primary">Select a file333</span>
+            </div>
+            <div id="response" class="hidden">
+                <div id="messages"></div>
+                <progress class="progress" id="file-progress" value="0">
+                    <span>0</span>%
+                </progress>
+            </div>
+        </label>
+    </form>
+
     <div id="label-container"></div>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
     <script
@@ -27,38 +52,17 @@
             const modelURL = URL + "model.json";
             const metadataURL = URL + "metadata.json";
 
-            // load the model and metadata
-            // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
-            // or files from your local hard drive
-            // Note: the pose library adds "tmImage" object to your window (window.tmImage)
             model = await tmImage.load(modelURL, metadataURL);
             maxPredictions = model.getTotalClasses();
-
-            // Convenience function to setup a webcam
-            const flip = true; // whether to flip the webcam
-            webcam = new tmImage.Webcam(200, 200, flip); // width, height, flip
-            await webcam.setup(); // request access to the webcam
-            await webcam.play();
-            window.requestAnimationFrame(loop);
-
-            // append elements to the DOM
-            document.getElementById("webcam-container").appendChild(webcam.canvas);
             labelContainer = document.getElementById("label-container");
             for (let i = 0; i < maxPredictions; i++) { // and class labels
                 labelContainer.appendChild(document.createElement("div"));
             }
         }
 
-        async function loop() {
-            webcam.update(); // update the webcam frame
-            await predict();
-            window.requestAnimationFrame(loop);
-        }
-
-        // run the webcam image through the image model
         async function predict() {
-            // predict can take in an image, video or canvas html element
-            const prediction = await model.predict(webcam.canvas);
+            var image = document.getElementById("file-image", false)
+            const prediction = await model.predict(image);
             for (let i = 0; i < maxPredictions; i++) {
                 const classPrediction =
                     prediction[i].className + ": " + prediction[i].probability.toFixed(2);
@@ -66,6 +70,7 @@
             }
         }
     </script>
+    <script type="text/javascript" src="script.js"></script>
 
 </body>
 
