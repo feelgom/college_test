@@ -26,6 +26,8 @@ async function predict() {
   console.log("start predict()");
   var image = document.getElementById("file-image", false)
   const prediction = await model.predict(image);
+  prediction.sort((a, b) => parseFloat(b.probability) - parseFloat(a.probability));
+
   for (let i = 0; i < maxPredictions; i++) {
     const classPrediction =
       prediction[i].className + ": " + prediction[i].probability.toFixed(2);
