@@ -28,6 +28,63 @@ async function predict() {
   const prediction = await model.predict(image);
   prediction.sort((a, b) => parseFloat(b.probability) - parseFloat(a.probability));
 
+  var college = prediction[0].className;
+  var probability = prediction[0].probability.toFixed(2);
+  var resultMessage;
+  switch (college) {
+    case "공과대학":
+      if (probability > 0.6){
+        resultMessage = "확신의 공대상!ㅋㅋㅋ"
+        break
+      } else if (probability > 0.3) {
+        resultMessage = "당신은 공대상이군요!"
+        break
+      }
+    case "문과대학":
+      if (probability > 0.6) {
+        resultMessage = "확신의 문과상!ㅋㅋㅋ"
+        break
+      } else if (probability > 0.3) {
+        resultMessage = "당신은 혹시 문과대생?!"
+        break
+      }
+    case "법과대학":
+      if (probability > 0.6) {
+        resultMessage = "당신은 법대생입니다!!!"
+        break
+      } else if (probability > 0.3) {
+        resultMessage = "당신은 법대에 어울리는상이군요!"
+        break
+      }
+    case "의과대학":
+      if (probability > 0.6) {
+        resultMessage = "당신은 누가봐도 의대생입니다!!!"
+        break
+      } else if (probability > 0.3) {
+        resultMessage = "당신은 의대상이군요!"
+        break
+      }
+    case "자연과학대학":
+      if (probability > 0.6) {
+        resultMessage = "확신의 이과상!ㅋㅋㅋㅋ"
+        break
+      } else if (probability > 0.3) {
+        resultMessage = "당신은 자연대상이군요!"
+        break
+      }
+    case "음악대학":
+      if (probability > 0.6) {
+        resultMessage = "음악 좀 하시나요?!ㅋㅋㅋㅋ"
+        break
+      } else if (probability > 0.3) {
+        resultMessage = "당신은 음대상이군요!"
+        break
+      }
+    default:
+      resultMessage = "이 사진만 봐서는 잘 모르겠어요... 다른 사진을 올려봐주시겠어요?!"
+  }
+  document.getElementById("result-message").innerHTML = resultMessage;
+
   for (let i = 0; i < maxPredictions; i++) {
     const classPrediction =
       prediction[i].className + ": " + prediction[i].probability.toFixed(2);

@@ -9,9 +9,6 @@ body {
 }
 
 .uploader {
-  width: 914px;
-  left: 0px;
-  top: 547px;
   border-radius: 10px;
   background: #F6F7FA;
   border: 1.5px solid #F6F7FA;
@@ -51,11 +48,6 @@ body {
   opacity: 0.3;
 }
 
-.uploader #start {
-  float: left;
-  clear: both;
-  width: 100%;
-}
 
 .uploader #start.hidden {
   display: none;
