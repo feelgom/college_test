@@ -2,75 +2,111 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bootstrap demo</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <div>내 얼굴과 어울리는 학과는?</div>
-    <button type="button" onclick="init()">Start</button>
-    <button type="button" onclick="predict()">예측</button>
+  <nav class="navbar navbar-expand-lg nav-distance">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">학과상 테스트</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Features</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Pricing</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled">Disabled</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
-    <h2>File Upload & Image Preview</h2>
-    <p class="lead">No Plugins <b>Just Javascript</b></p>
+  <!-- main text -->
+  <section class="section">
+    <h1 class="title">인공지능 학과상 테스트</h1>
+    <h2 class="subtitle">내 얼굴은 어떤 학과에 어울릴까?</h2>
+  </section>
 
-    <!-- Upload  -->
-    <form id="file-upload-form" class="uploader">
-        <input id="file-upload" type="file" name="fileUpload" accept="image/*" />
+  <!-- github link -->
+  <section class="github">
+    <div class="container mt-5 github-cover d-flex flex-row-reverse"><img src="img/github-icon.jpg" alt=""
+        class="github-icon">
+      <a href="https://github.com/feelgom" class="github-link">By @feelgom</a>
+    </div>
+  </section>
 
-        <label for="file-upload" id="file-drag">
-            <img id="file-image" src="#" alt="Preview" class="hidden">
-            <div id="start">
-                <i class="fa fa-download" aria-hidden="true"></i>
-                <div>Select a file or drag here</div>
-                <div id="notimage" class="hidden">Please select an image2222</div>
-                <span id="file-upload-btn" class="btn btn-primary">Select a file333</span>
-            </div>
-            <div id="response" class="hidden">
-                <div id="messages"></div>
-                <progress class="progress" id="file-progress" value="0">
-                    <span>0</span>%
-                </progress>
-            </div>
-        </label>
-    </form>
+  <!-- Upload  -->
+  <form id="file-upload-form" class="mt-5 container uploader">
+    <input id="file-upload" type="file" name="fileUpload" accept="image/*" />
+    <label for="file-upload" id="file-drag" class="image-upload-wrap">
+      
+      <!-- before image uploaded -->
+      <div id="start">
+        <img src="img/upload_img.svg" alt="" class="mt-5 pt-5 upload-icon">
+        <h3 class="mb-5 pb-5 pt-2 upload-text">얼굴 사진을 올려놓거나 눌러서 업로드하세요!</h3>
+        <div id="notimage" class="hidden">Please select an image</div>
+      </div>
+      
+      <!-- after image uploaded -->
+      <img id="file-image" src="#" alt="Preview" class="hidden">
+      <div id="label-container"></div>
 
-    <div id="label-container"></div>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
-    <script
-        src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
-    <script type="text/javascript">
-        // More API functions here:
-        // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
+      <div id="response" class="hidden">
+        <div id="messages"></div>
+      </div>
+    </label>
+  </form>
 
-        // the link to your model provided by Teachable Machine export panel
-        const URL = "https://teachablemachine.withgoogle.com/models/cCFZeL2dP/";
+  <!-- 댓글 구현 -->
+  <section class="mt-5 container commnet">
+    <div id="disqus_thread"></div>
+    <noscript>현재 사용 중인 브라우저는 스크립트를 지원하지 않거나, 해당 기능이 활성화되어 있지 않아서 댓글 기능을 사용할 수 없습니다.</noscript>
+  </section>
 
-        let model, webcam, labelContainer, maxPredictions;
+  <!-- footer -->
+  <div class="mt-5 pt-3 footer">
+    <p>© feelgom 2023. All Rights Reserved.</p>
+    <p>Privacy &nbsp&nbsp | &nbsp&nbsp Terms &nbsp&nbsp | &nbsp&nbsp FAQ</p>
+  </div>
 
-        // Load the image model and setup the webcam
-        async function init() {
-            const modelURL = URL + "model.json";
-            const metadataURL = URL + "metadata.json";
-
-            model = await tmImage.load(modelURL, metadataURL);
-            maxPredictions = model.getTotalClasses();
-            labelContainer = document.getElementById("label-container");
-            for (let i = 0; i < maxPredictions; i++) { // and class labels
-                labelContainer.appendChild(document.createElement("div"));
-            }
-        }
-
-        async function predict() {
-            var image = document.getElementById("file-image", false)
-            const prediction = await model.predict(image);
-            for (let i = 0; i < maxPredictions; i++) {
-                const classPrediction =
-                    prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-                labelContainer.childNodes[i].innerHTML = classPrediction;
-            }
-        }
-    </script>
-    <script type="text/javascript" src="script.js"></script>
+  <!-- script -->
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://disqus.com/by/feelgom/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "college-test"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function () { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://feelgom.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
+    integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+  <script type="text/javascript" src="script.js"></script>
 
 </body>
 

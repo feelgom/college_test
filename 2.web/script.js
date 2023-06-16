@@ -1,12 +1,49 @@
+
+// More API functions here:
+// https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
+
+// the link to your model provided by Teachable Machine export panel
+const URL = "https://teachablemachine.withgoogle.com/models/cCFZeL2dP/";
+
+let model, webcam, labelContainer, maxPredictions;
+
+// Load the image model and setup the webcam
+async function init() {
+  console.log("start model loading");
+  const modelURL = URL + "model.json";
+  const metadataURL = URL + "metadata.json";
+
+  model = await tmImage.load(modelURL, metadataURL);
+  maxPredictions = model.getTotalClasses();
+  labelContainer = document.getElementById("label-container");
+  for (let i = 0; i < maxPredictions; i++) { // and class labels
+    labelContainer.appendChild(document.createElement("div"));
+  }
+  await console.log("finish model loading");
+}
+
+async function predict() {
+  console.log("start predict()");
+  var image = document.getElementById("file-image", false)
+  const prediction = await model.predict(image);
+  for (let i = 0; i < maxPredictions; i++) {
+    const classPrediction =
+      prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+    labelContainer.childNodes[i].innerHTML = classPrediction;
+  }
+  await console.log("finish predict()");
+}
+
+
 // File Upload
 //
 function ekUpload() {
   function Init() {
     console.log("Upload Initialised");
+    model_loaded = init()
 
     var fileSelect = document.getElementById("file-upload"),
-      fileDrag = document.getElementById("file-drag"),
-      submitButton = document.getElementById("submit-button");
+      fileDrag = document.getElementById("file-drag");
 
     fileSelect.addEventListener("change", fileSelectHandler, false);
 
@@ -40,7 +77,8 @@ function ekUpload() {
     // Process all File objects
     for (var i = 0, f; (f = files[i]); i++) {
       parseFile(f);
-      uploadFile(f);
+      // uploadFile(f);
+      model_loaded.then(() => predict())
     }
   }
 
@@ -53,10 +91,7 @@ function ekUpload() {
 
   function parseFile(file) {
     console.log(file.name);
-    output("<strong>" + encodeURI(file.name) + "</strong>");
 
-    // var fileType = file.type;
-    // console.log(fileType);
     var imageName = file.name;
 
     var isGood = /\.(?=gif|jpg|png|jpeg)/gi.test(imageName);
@@ -76,34 +111,13 @@ function ekUpload() {
     }
   }
 
-  function setProgressMaxValue(e) {
-    var pBar = document.getElementById("file-progress");
-
-    if (e.lengthComputable) {
-      pBar.max = e.total;
-    }
-  }
-
-  function updateFileProgress(e) {
-    var pBar = document.getElementById("file-progress");
-
-    if (e.lengthComputable) {
-      pBar.value = e.loaded;
-    }
-  }
-
   function uploadFile(file) {
     var xhr = new XMLHttpRequest(),
       fileInput = document.getElementById("class-roster-file"),
-      pBar = document.getElementById("file-progress"),
       fileSizeLimit = 1024; // In MB
     if (xhr.upload) {
       // Check if file is less than x MB
       if (file.size <= fileSizeLimit * 1024 * 1024) {
-        // Progress bar
-        pBar.style.display = "inline";
-        xhr.upload.addEventListener("loadstart", setProgressMaxValue, false);
-        xhr.upload.addEventListener("progress", updateFileProgress, false);
 
         // File received / failed
         xhr.onreadystatechange = function (e) {
@@ -138,3 +152,5 @@ function ekUpload() {
   }
 }
 ekUpload();
+
+
