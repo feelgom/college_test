@@ -137,7 +137,6 @@ function ekUpload() {
     for (var i = 0, f; (f = files[i]); i++) {
       parseFile(f);
       // uploadFile(f);
-      model_loaded.then(() => predict())
     }
   }
 
@@ -161,6 +160,8 @@ function ekUpload() {
       // Thumbnail Preview
       document.getElementById("file-image").classList.remove("hidden");
       document.getElementById("file-image").src = window.URL.createObjectURL(file);
+      model_loaded.then(() => predict())
+
     } else {
       document.getElementById("file-image").classList.add("hidden");
       document.getElementById("notimage").classList.remove("hidden");
