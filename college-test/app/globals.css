@@ -1,27 +1,206 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css);
+@import url("https://fonts.googleapis.com/css?family=Roboto");
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+html,
+body {
+  height: 100%;
+  text-align: center;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+.uploader {
+  border-radius: 10px;
+  background: #F6F7FA;
+  border: 1.5px solid #F6F7FA;
+  padding: 13% 3%;
+}
+
+.image-upload-wrap {
+  width: 55%;
+  margin: 0 auto;
+  border-radius: 10px;
+  background: #FFFFFF;
+  border: 1.5px dashed #35465D;
+  box-shadow: 0px 4px 4px 0px #00000040;
+}
+
+.image-upload-wrap:hover {
+  background: #35454d;
+  border: 1.5px dashed #35465D;
+}
+
+.upload-icon {
+  width: 30%
+}
+
+.upload-text {
+  width: 61%;
+  font-family: 'Jua';
+  font-size: 1.5rem;
+  line-height: 1.53;
+  text-align: center;
+  color: #35465D;
+  margin: 0 auto;
+}
+
+.uploader label.hover #start i.fa {
+  transform: scale(0.8);
+  opacity: 0.3;
+}
+
+
+.uploader #start.hidden {
+  display: none;
+}
+
+.uploader #start i.fa {
+  font-size: 50px;
+  margin-bottom: 1rem;
+  transition: all .2s ease-in-out;
+}
+
+.uploader #response {
+  float: left;
+  clear: both;
+  width: 100%;
+}
+
+.uploader #response.hidden {
+  display: none;
+}
+
+.uploader #response #messages {
+  margin-bottom: .5rem;
+}
+
+.uploader #file-image {
+  display: inline;
+  margin: 0 auto .5rem auto;
+  width: auto;
+  height: auto;
+  max-width: 180px;
+}
+
+.uploader #file-image.hidden {
+  display: none;
+}
+
+.uploader #notimage {
+  display: block;
+  float: left;
+  clear: both;
+  width: 100%;
+}
+
+.uploader #notimage.hidden {
+  display: none;
+}
+
+.uploader input[type="file"] {
+  display: none;
+}
+
+.uploader div {
+  margin: 0 0 .5rem 0;
+  color: #5f6982;
+}
+
+.uploader .btn {
+  display: inline-block;
+  margin: .5rem .5rem 1rem .5rem;
+  clear: both;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  text-transform: initial;
+  border: none;
+  border-radius: .2rem;
+  outline: none;
+  padding: 0 1rem;
+  height: 36px;
+  line-height: 36px;
+  color: #fff;
+  transition: all 0.2s ease-in-out;
+  box-sizing: border-box;
+  background: #454cad;
+  border-color: #454cad;
+  cursor: pointer;
+}
+
+.nav-distance {
+  padding: 2.1% 7.7%
+}
+
+.navbar-brand {
+  font-family: 'Jua';
+  font-style: normal;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  color: #35465D;
+}
+
+.navbar {
+  --bs-navbar-toggler-border-color: #ffffff
+}
+
+.section {
+  margin-top: 100px
+}
+
+.title {
+  font-family: 'Jua';
+  line-height: 1.67;
+  align-items: center;
+  text-align: center;
+  color: #35465D;
+}
+
+.subtitle {
+  font-family: 'Jua';
+  line-height: 1.53;
+  align-items: center;
+  text-align: center;
+  color: #35465D;
+}
+
+@media screen and (max-width: 600px) {
+  html {
+    font-size: 10px
+  }
+
+  .navbar-brand {
+    font-size: 2rem;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.github-link {
+  font-family: 'Jua';
+  font-size: 1rem;
+  line-height: 1.71;
+  align-items: center;
+  text-align: center;
+  text-decoration-line: underline;
+  color: #F73737;
+}
+
+.github-icon {
+  width: 1.6rem;
+}
+
+div#disqus_thread iframe[sandbox] {
+  max-height: 0px !important;
+}
+
+.footer {
+  text-align: center;
+  background: #0f1f35;
+  height: 50px;
+}
+
+.footer p {
+  font-family: "Jua";
+  font-size: 12px;
+  line-height: 0.2;
+  color: #555b68;
 }

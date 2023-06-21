@@ -1,113 +1,133 @@
-import Image from 'next/image'
+import Image from "next/image"
+import githubIcon from '../public/github-icon.jpg';
+import uploadImg from '../public/upload_img.svg';
+import {ekUpload} from '../public/static/script.js';
 
 export default function Home() {
+  let disqus_config = function () {
+    this.page.url = "https://disqus.com/by/feelgom/";  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = "college-test"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+  };
+  (function () { // DON'T EDIT BELOW THIS LINE
+    if (typeof window === 'object') {
+      // Check if document is finally loaded
+      let s = document.createElement('script');
+      s.src = 'https://feelgom.disqus.com/embed.js';
+      let date:number =  +new Date();
+      s.setAttribute('data-timestamp', date.toString());
+      (document.head || document.body).appendChild(s);
+      document.addEventListener("DOMContentLoaded", function () {
+        alert('Finished loading')
+      });
+    }
+  })();
+
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <div>
+      <nav className="navbar navbar-expand-lg nav-distance">
+        <div className="container-fluid">
+          <a className="navbar-brand" href="#">학과상 테스트</a>
+          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse" id="navbarNav">
+            <ul className="navbar-nav">
+              <li className="nav-item">
+                <a className="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="#">Features</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="#">Pricing</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link disabled">Disabled</a>
+              </li>
+            </ul>
+          </div>
         </div>
+      </nav>
+
+      {/* <!-- main text --> */}
+      <section className="section">
+        <h1 className="title">인공지능 학과상 테스트</h1>
+        <h2 className="subtitle">내 얼굴은 어떤 학과에 어울릴까?</h2>
+      </section>
+
+      {/* <!-- github link --> */}
+      <section className="github">
+        <div className="container mt-5 github-cover d-flex flex-row-reverse">
+          {/* <img src="img/github-icon.jpg" alt="" className="github-icon"/> */}
+          <Image src={githubIcon} alt="" className="github-icon"/>
+          <a href="https://github.com/feelgom" className="github-link">By @feelgom &nbsp;</a>
+        </div>
+
+        {/* <!-- 방문자수 카운터 --> */}
+        <div className="container visit-counter d-flex flex-row-reverse">
+          <img src="https://www.cutercounter.com/hits.php?id=hmxnokxx&nd=6&style=1" alt="hit counter"/>
+          <a>today:</a>
+        </div>
+
+      </section>
+
+      {/* <!-- <button type="button" onclick="predict()">예측</button> --> */}
+      {/* <!-- Upload  --> */}
+      <form id="file-upload-form" className="mt-5 container uploader">
+        <input id="file-upload" type="file" name="fileUpload" accept="image/*" />
+        <label htmlFor="file-upload" id="file-drag" className="image-upload-wrap">
+
+          {/* <!-- before image uploaded --> */}
+          <div id="start">
+            <Image src={uploadImg} alt="" className="mt-5 pt-5 upload-icon"/>
+              <h3 className="mb-5 pb-5 pt-2 upload-text">얼굴 사진을 올려놓거나 눌러서 업로드하세요!</h3>
+              <div id="notimage" className="hidden">Please select an image</div>
+          </div>
+
+          {/* <!-- after image uploaded --> */}
+          <img id="file-image" src="#" alt="Preview" className="hidden"/>
+            <p id="result-message"></p>
+            <div id="label-container"></div>
+
+            <div id="response" className="hidden">
+              <div id="messages"></div>
+            </div>
+        </label>
+      </form>
+
+      <ins className="kakao_ad_area" style={{display:"none"}} data-ad-unit="DAN-8J3hFhTYJd6wghzX" data-ad-width="320"
+        data-ad-height="50"></ins>
+      <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+
+      {/* <!-- 댓글 구현 --> */}
+      <section className="mt-5 container commnet">
+        <div id="disqus_thread"></div>
+        <noscript>현재 사용 중인 브라우저는 스크립트를 지원하지 않거나, 해당 기능이 활성화되어 있지 않아서 댓글 기능을 사용할 수 없습니다.</noscript>
+      </section>
+
+      <ins className="kakao_ad_area" style={{display:"none"}} data-ad-unit="DAN-gV4MdSdfXFZpjtOr" data-ad-width="728"
+        data-ad-height="90"></ins>
+      <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+
+      {/* <!-- footer --> */}
+      <div className="mt-5 pt-3 footer">
+        <p>© feelgom 2023. All Rights Reserved.</p>
+        <p>Privacy &nbsp&nbsp | &nbsp&nbsp Terms &nbsp&nbsp | &nbsp&nbsp FAQ</p>
       </div>
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+      {/* <!-- script --> */}
+      <script async src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossOrigin="anonymous"></script>
+      <script async src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
+        integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS"
+        crossOrigin="anonymous"></script>
+      <script async src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js" crossOrigin="anonymous"></script>
+      <script async src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+      {/* <script type="text/javascript" src="public/static/script.js"></script> */}
 
-      <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800 hover:dark:bg-opacity-30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore the Next.js 13 playground.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    </div>
   )
 }
