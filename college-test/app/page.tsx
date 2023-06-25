@@ -21,8 +21,6 @@ export default function Home() {
       });
     }
   })();
-
-
   return (
     <div>
       <nav className="navbar navbar-expand-lg nav-distance">
@@ -97,9 +95,9 @@ export default function Home() {
         </label>
       </form>
 
-      <ins className="kakao_ad_area" style={{display:"none"}} data-ad-unit="DAN-8J3hFhTYJd6wghzX" data-ad-width="320"
+      {/* <ins className="kakao_ad_area" style={{display:"none"}} data-ad-unit="DAN-8J3hFhTYJd6wghzX" data-ad-width="320"
         data-ad-height="50"></ins>
-      <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+      <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script> */}
 
       {/* <!-- 댓글 구현 --> */}
       <section className="mt-5 container commnet">
@@ -107,9 +105,9 @@ export default function Home() {
         <noscript>현재 사용 중인 브라우저는 스크립트를 지원하지 않거나, 해당 기능이 활성화되어 있지 않아서 댓글 기능을 사용할 수 없습니다.</noscript>
       </section>
 
-      <ins className="kakao_ad_area" style={{display:"none"}} data-ad-unit="DAN-gV4MdSdfXFZpjtOr" data-ad-width="728"
+      {/* <ins className="kakao_ad_area" style={{display:"none"}} data-ad-unit="DAN-gV4MdSdfXFZpjtOr" data-ad-width="728"
         data-ad-height="90"></ins>
-      <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+      <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script> */}
 
       {/* <!-- footer --> */}
       <div className="mt-5 pt-3 footer">

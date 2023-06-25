@@ -14,6 +14,9 @@
 </head>
 
 <body>
+  <form id="file-upload-form222" class="mt-5 container uploader222" style="background:red"></form>
+
+
   <nav class="navbar navbar-expand-lg nav-distance">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">학과상 테스트</a>
@@ -60,21 +63,20 @@
 
   </section>
 
-  <!-- <button type="button" onclick="predict()">예측</button> -->
   <!-- Upload  -->
   <form id="file-upload-form" class="mt-5 container uploader">
     <input id="file-upload" type="file" name="fileUpload" accept="image/*" />
-    <label for="file-upload" id="file-drag" class="image-upload-wrap">
+    <label for="file-upload" id="file-drag" class="pt-5 pb-4 image-upload-wrap">
 
       <!-- before image uploaded -->
       <div id="start">
-        <img src="img/upload_img.svg" alt="" class="mt-5 pt-5 upload-icon">
-        <h3 class="mb-5 pb-5 pt-2 upload-text">얼굴 사진을 올려놓거나 눌러서 업로드하세요!</h3>
+        <img src="img/upload_img.svg" alt="" class="upload-icon">
+        <h3 class="mt-2 upload-text">얼굴 사진을 올려놓거나 눌러서 업로드하세요!</h3>
         <div id="notimage" class="hidden">Please select an image</div>
       </div>
 
       <!-- after image uploaded -->
-      <img id="file-image" src="#" alt="Preview" class="hidden">
+      <img id="file-image" src="#" alt="Preview" class="hidden uploaded-image">
       <p id="result-message"></p>
       <div id="label-container"></div>
 

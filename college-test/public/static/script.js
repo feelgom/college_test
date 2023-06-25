@@ -99,6 +99,7 @@ export async function predict() {
 export function ekUpload() {
   function Init() {
     console.log("Upload Initialised");
+    model_loaded = init()
     let fileSelect = document.getElementById("file-upload"),
       fileDrag = document.getElementById("file-drag");
 
@@ -124,7 +125,7 @@ export function ekUpload() {
       e.type === "dragover" ? "hover" : "modal-body file-upload";
   }
 
-  function fileSelectHandler(e) {
+  async function fileSelectHandler(e) {
     // Fetch FileList object
     var files = e.target.files || e.dataTransfer.files;
 
@@ -133,10 +134,14 @@ export function ekUpload() {
 
     // Process all File objects
     for (var i = 0, f; (f = files[i]); i++) {
-      parseFile(f);
+      // parseFile(f,() =>{
+      //   model_loaded.then(() => predict())
+      // });
+      parseFile(f, () => {
+        predict();
+      });
+
       // uploadFile(f);
-      model_loaded = init()
-      model_loaded.then(() => predict())
     }
   }
 
@@ -147,7 +152,7 @@ export function ekUpload() {
     m.innerHTML = msg;
   }
 
-  function parseFile(file) {
+function parseFile(file, callback) {
     console.log(file.name);
 
     var imageName = file.name;
@@ -160,6 +165,7 @@ export function ekUpload() {
       // Thumbnail Preview
       document.getElementById("file-image").classList.remove("hidden");
       document.getElementById("file-image").src = window.URL.createObjectURL(file);
+      callback();
     } else {
       document.getElementById("file-image").classList.add("hidden");
       document.getElementById("notimage").classList.remove("hidden");

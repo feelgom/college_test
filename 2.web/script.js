@@ -33,7 +33,7 @@ async function predict() {
   var resultMessage;
   switch (college) {
     case "공과대학":
-      if (probability > 0.6){
+      if (probability > 0.6) {
         resultMessage = "확신의 공대상!ㅋㅋㅋ"
         break
       } else if (probability > 0.3) {
@@ -88,7 +88,11 @@ async function predict() {
   for (let i = 0; i < maxPredictions; i++) {
     const classPrediction =
       prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+    if (i == 0) {
+      labelContainer.childNodes[i].style.fontWeight = "bold";
+    }
     labelContainer.childNodes[i].innerHTML = classPrediction;
+    labelContainer.childNodes[i].appendChild(document.createElement("form"));
   }
   await console.log("finish predict()");
 }
@@ -99,6 +103,7 @@ async function predict() {
 function ekUpload() {
   function Init() {
     console.log("Upload Initialised");
+    model_loaded = init()
     var fileSelect = document.getElementById("file-upload"),
       fileDrag = document.getElementById("file-drag");
 
@@ -124,7 +129,7 @@ function ekUpload() {
       e.type === "dragover" ? "hover" : "modal-body file-upload";
   }
 
-  function fileSelectHandler(e) {
+  async function fileSelectHandler(e) {
     // Fetch FileList object
     var files = e.target.files || e.dataTransfer.files;
 
@@ -133,10 +138,12 @@ function ekUpload() {
 
     // Process all File objects
     for (var i = 0, f; (f = files[i]); i++) {
-      parseFile(f);
+      // image_loaded = await parseFile(f);
+      parseFile(f).then((res) => {
+        console.log(res)
+        model_loaded.then(() => predict())
+      })
       // uploadFile(f);
-      model_loaded = init()
-      model_loaded.then(() => predict())
     }
   }
 
@@ -147,7 +154,7 @@ function ekUpload() {
     m.innerHTML = msg;
   }
 
-  function parseFile(file) {
+  async function parseFile(file) {
     console.log(file.name);
 
     var imageName = file.name;
@@ -160,6 +167,7 @@ function ekUpload() {
       // Thumbnail Preview
       document.getElementById("file-image").classList.remove("hidden");
       document.getElementById("file-image").src = window.URL.createObjectURL(file);
+      return "finish parseFile()"
     } else {
       document.getElementById("file-image").classList.add("hidden");
       document.getElementById("notimage").classList.remove("hidden");
