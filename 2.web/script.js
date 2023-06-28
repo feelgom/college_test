@@ -91,8 +91,16 @@ async function predict() {
     if (i == 0) {
       labelContainer.childNodes[i].style.fontWeight = "bold";
     }
-    labelContainer.childNodes[i].innerHTML = classPrediction;
-    labelContainer.childNodes[i].appendChild(document.createElement("form"));
+
+    const newDiv1 = document.createElement("div");
+    newDiv1.innerHTML = classPrediction;
+    newDiv1.style = "display:inline-block";
+
+    const newDiv2 = document.createElement("div");
+    newDiv2.style = "background:red;border-radius:10px;width:150px;height:20px;display:inline-block;align-items: center;";
+
+    labelContainer.childNodes[i].appendChild(newDiv1);
+    labelContainer.childNodes[i].appendChild(newDiv2);
   }
   await console.log("finish predict()");
 }

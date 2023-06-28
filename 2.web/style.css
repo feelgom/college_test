@@ -79,7 +79,7 @@ body {
   width: auto;
   height: auto;
   max-width: 180px;
-  border-radius: 10px;;
+  border-radius: 10px;
 }
 
 .uploader #file-image.hidden {
