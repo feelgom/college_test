@@ -16,12 +16,16 @@ body {
 }
 
 .image-upload-wrap {
-  width: 55%;
+  width: 50%;
   margin: 0 auto;
   border-radius: 10px;
   background: #FFFFFF;
   border: 1.5px dashed #35465D;
   box-shadow: 0px 4px 4px 0px #00000040;
+}
+
+.modal-body {
+  width: 55%;
 }
 
 .image-upload-wrap:hover {
@@ -76,7 +80,7 @@ body {
 .uploader #file-image {
   display: inline;
   margin: 0 auto .5rem auto;
-  width: auto;
+  width: 80%;
   height: auto;
   max-width: 180px;
   border-radius: 10px;
@@ -199,9 +203,8 @@ div#disqus_thread iframe[sandbox] {
   color: #E67701;
 }
 
-/* tm-bar-graph tag에 style 추가 */
 tm-bar-graph {
-  width: 70%;
+  width: 60%;
   border-radius: 5px;
   height: 29px;
   display: block;

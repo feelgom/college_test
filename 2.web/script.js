@@ -22,25 +22,19 @@ async function init() {
   await console.log("finish model loading");
 }
 
-function makeBarGraph(value, ind) {
-  var colorMap = [["#E67701", "#FFECE2", "#ffffff"], ["#D84C6F", "#FFE9EC", "#ffffff"],
-  ["#794AEF", "#F1F0FF", "#ffffff"],
-  ["#1967D2", "#D2E3FC", "#ffffff"],
-  ["#E67701", "#FFECE2", "#ffffff"],
-  ["#D84C6F", "#FFE9EC", "#ffffff"]]
-
+function makeBarGraph(value, colors) {
   var valueLabel = document.createElement("span");
   valueLabel.id = "value-label";
   valueLabel.innerHTML = value + "%";
-  valueLabel.style = "color:" + colorMap[ind][2] + ";";
+  valueLabel.style = "color:" + colors[2] + ";";
   var inner = document.createElement("div");
   inner.id = "inner";
-  inner.style = "width:" + value + "%" + ";background-color:" + colorMap[ind][0] + ";"
+  inner.style = "width:" + value + "%" + ";background-color:" + colors[0] + ";"
 
   inner.appendChild(valueLabel);
   var container = document.createElement("div");
   container.id = "container";
-  container.style = "background-color:" + colorMap[ind][1] + ";"
+  container.style = "background-color:" + colors[1] + ";"
   container.appendChild(inner);
 
   var tmBarGraph = document.createElement("tm-bar-graph");
@@ -112,20 +106,27 @@ async function predict() {
   }
   document.getElementById("result-message").innerHTML = resultMessage;
 
+
+  var colorMap = [["#E67701", "#FFECE2", "#ffffff"], ["#D84C6F", "#FFE9EC", "#ffffff"],
+  ["#794AEF", "#F1F0FF", "#ffffff"],
+  ["#1967D2", "#D2E3FC", "#ffffff"],
+  ["#E67701", "#FFECE2", "#ffffff"],
+  ["#D84C6F", "#FFE9EC", "#ffffff"]]
+
   for (let i = 0; i < maxPredictions; i++) {
     const classPrediction =
       prediction[i].className + ": " + prediction[i].probability.toFixed(2);
     if (i == 0) {
       labelContainer.childNodes[i].style.fontWeight = "bold";
     }
+    var colors = colorMap[i]
 
-    
     var barGraphLabel = document.createElement("div");
     barGraphLabel.className = "bar-graph-label";
     barGraphLabel.innerHTML = prediction[i].className;
-    barGraphLabel.style = "display:inline-block";
-    
-    var tmBarGraph = makeBarGraph(prediction[i].probability.toFixed(2) * 100, i);
+    barGraphLabel.style = "display:inline-block;color:" + colors[0] + ";"
+
+    var tmBarGraph = makeBarGraph(prediction[i].probability.toFixed(2) * 100, colors);
     const barGraphHolder = document.createElement("div");
     barGraphHolder.className = "bar-graph-holder";
     barGraphHolder.appendChild(barGraphLabel);
