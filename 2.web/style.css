@@ -187,3 +187,46 @@ div#disqus_thread iframe[sandbox] {
 .uploaded-image {
   border-radius: 10px;
 }
+
+.bar-graph-holder {
+  display: flex;
+  margin-bottom: 12px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bar-graph-label {
+  color: #E67701;
+}
+
+/* tm-bar-graph tag에 style 추가 */
+tm-bar-graph {
+  width: 70%;
+  border-radius: 5px;
+  height: 29px;
+  display: block;
+  overflow: hidden;
+}
+
+tm-bar-graph #container {
+  background-color: #FFECE2;
+  width: 100%;
+  height: 100%;
+}
+
+tm-bar-graph #inner {
+  position: relative;
+  background-color: #E67701;
+  height: 100%;
+  border-radius: 5px;
+}
+
+tm-bar-graph #value-label {
+  /* color: #ffffff; */
+  position: absolute;
+  top: 50%;
+  right: 5px;
+  font-size: 10px;
+  font-weight: 400;
+  transform: translate(0, -50%)
+}

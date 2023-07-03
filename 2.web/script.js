@@ -22,6 +22,33 @@ async function init() {
   await console.log("finish model loading");
 }
 
+function makeBarGraph(value, ind) {
+  var colorMap = [["#E67701", "#FFECE2", "#ffffff"], ["#D84C6F", "#FFE9EC", "#ffffff"],
+  ["#794AEF", "#F1F0FF", "#ffffff"],
+  ["#1967D2", "#D2E3FC", "#ffffff"],
+  ["#E67701", "#FFECE2", "#ffffff"],
+  ["#D84C6F", "#FFE9EC", "#ffffff"]]
+
+  var valueLabel = document.createElement("span");
+  valueLabel.id = "value-label";
+  valueLabel.innerHTML = value + "%";
+  valueLabel.style = "color:" + colorMap[ind][2] + ";";
+  var inner = document.createElement("div");
+  inner.id = "inner";
+  inner.style = "width:" + value + "%" + ";background-color:" + colorMap[ind][0] + ";"
+
+  inner.appendChild(valueLabel);
+  var container = document.createElement("div");
+  container.id = "container";
+  container.style = "background-color:" + colorMap[ind][1] + ";"
+  container.appendChild(inner);
+
+  var tmBarGraph = document.createElement("tm-bar-graph");
+  tmBarGraph.appendChild(container);
+
+  return tmBarGraph;
+}
+
 async function predict() {
   console.log("start predict()");
   var image = document.getElementById("file-image", false)
@@ -92,15 +119,19 @@ async function predict() {
       labelContainer.childNodes[i].style.fontWeight = "bold";
     }
 
-    const newDiv1 = document.createElement("div");
-    newDiv1.innerHTML = classPrediction;
-    newDiv1.style = "display:inline-block";
+    
+    var barGraphLabel = document.createElement("div");
+    barGraphLabel.className = "bar-graph-label";
+    barGraphLabel.innerHTML = prediction[i].className;
+    barGraphLabel.style = "display:inline-block";
+    
+    var tmBarGraph = makeBarGraph(prediction[i].probability.toFixed(2) * 100, i);
+    const barGraphHolder = document.createElement("div");
+    barGraphHolder.className = "bar-graph-holder";
+    barGraphHolder.appendChild(barGraphLabel);
+    barGraphHolder.appendChild(tmBarGraph);
+    labelContainer.childNodes[i].appendChild(barGraphHolder);
 
-    const newDiv2 = document.createElement("div");
-    newDiv2.style = "background:red;border-radius:10px;width:150px;height:20px;display:inline-block;align-items: center;";
-
-    labelContainer.childNodes[i].appendChild(newDiv1);
-    labelContainer.childNodes[i].appendChild(newDiv2);
   }
   await console.log("finish predict()");
 }
