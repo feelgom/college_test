@@ -107,15 +107,17 @@ async function predict() {
   document.getElementById("result-message").innerHTML = resultMessage;
 
 
-  var colorMap = [["#E67701", "#FFECE2", "#ffffff"], ["#D84C6F", "#FFE9EC", "#ffffff"],
-  ["#794AEF", "#F1F0FF", "#ffffff"],
-  ["#1967D2", "#D2E3FC", "#ffffff"],
-  ["#E67701", "#FFECE2", "#ffffff"],
-  ["#D84C6F", "#FFE9EC", "#ffffff"]]
+  var colorMap = [
+    ["#E67701", "#FFECE2", "#ffffff"],
+    ["#D84C6F", "#FFE9EC", "#ffffff"],
+    ["#794AEF", "#F1F0FF", "#ffffff"],
+    ["#1967D2", "#D2E3FC", "#ffffff"],
+    ["#E67701", "#FFECE2", "#ffffff"],
+    ["#D84C6F", "#FFE9EC", "#ffffff"]
+  ]
 
-  for (let i = 0; i < maxPredictions; i++) {
-    const classPrediction =
-      prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+  // for (let i = 0; i < maxPredictions; i++) {
+  for (let i = 0; i < 5; i++) {
     if (i == 0) {
       labelContainer.childNodes[i].style.fontWeight = "bold";
     }
@@ -131,6 +133,9 @@ async function predict() {
     barGraphHolder.className = "bar-graph-holder";
     barGraphHolder.appendChild(barGraphLabel);
     barGraphHolder.appendChild(tmBarGraph);
+    while (labelContainer.childNodes[i].firstChild) {
+      labelContainer.childNodes[i].removeChild(labelContainer.childNodes[i].firstChild);
+    }
     labelContainer.childNodes[i].appendChild(barGraphHolder);
 
   }
@@ -181,7 +186,9 @@ function ekUpload() {
       // image_loaded = await parseFile(f);
       parseFile(f).then((res) => {
         console.log(res)
-        model_loaded.then(() => predict())
+        setTimeout(function () {
+          model_loaded.then(() => predict());
+        }, 500);// 3초 후에 predict() 실행
       })
       // uploadFile(f);
     }
@@ -189,7 +196,6 @@ function ekUpload() {
 
   // Output
   function output(msg) {
-    // Response
     var m = document.getElementById("messages");
     m.innerHTML = msg;
   }
@@ -202,7 +208,7 @@ function ekUpload() {
     var isGood = /\.(?=gif|jpg|png|jpeg)/gi.test(imageName);
     if (isGood) {
       document.getElementById("start").classList.add("hidden");
-      document.getElementById("response").classList.remove("hidden");
+      document.getElementById("retry").classList.remove("hidden");
       document.getElementById("notimage").classList.add("hidden");
       // Thumbnail Preview
       document.getElementById("file-image").classList.remove("hidden");
@@ -212,7 +218,7 @@ function ekUpload() {
       document.getElementById("file-image").classList.add("hidden");
       document.getElementById("notimage").classList.remove("hidden");
       document.getElementById("start").classList.remove("hidden");
-      document.getElementById("response").classList.add("hidden");
+      document.getElementById("retry").classList.add("hidden");
       document.getElementById("file-upload-form").reset();
     }
   }
