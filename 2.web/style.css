@@ -63,17 +63,18 @@ body {
   transition: all .2s ease-in-out;
 }
 
-.uploader #response {
+.uploader #retry {
   float: left;
   clear: both;
   width: 100%;
+  color: #f14815;
 }
 
-.uploader #response.hidden {
+.uploader #retry.hidden {
   display: none;
 }
 
-.uploader #response #messages {
+.uploader #retry #messages {
   margin-bottom: .5rem;
 }
 
