@@ -67,7 +67,14 @@ body {
   float: left;
   clear: both;
   width: 100%;
-  color: #f14815;
+  font-family: 'Jua';
+  font-size: 1.2rem;
+  line-height: 1.53;
+  text-align: center;
+  color: #35465D;
+  background-color: #a7aeb8;
+  margin: 0 auto;
+  border-radius: 10px;
 }
 
 .uploader #retry.hidden {
