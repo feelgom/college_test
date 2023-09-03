@@ -29,7 +29,7 @@ body {
 }
 
 .image-upload-wrap:hover {
-  background: #35454d;
+  background: #27363d;
   border: 1.5px dashed #35465D;
 }
 
@@ -70,11 +70,16 @@ body {
   font-family: 'Jua';
   font-size: 1.2rem;
   line-height: 1.53;
-  text-align: center;
+  align-items: center;
   color: #35465D;
   background-color: #a7aeb8;
   margin: 0 auto;
   border-radius: 10px;
+}
+
+.uploader #retry:hover {
+  background: #27363d;
+  border: 1.5px dashed #35465D;
 }
 
 .uploader #retry.hidden {
