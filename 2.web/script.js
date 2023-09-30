@@ -20,6 +20,8 @@ async function init() {
     labelContainer.appendChild(document.createElement("div"));
   }
   await console.log("finish model loading");
+  document.getElementById("waiting").classList.add("hidden");
+  document.getElementById("start").classList.remove("hidden");
 }
 
 function makeLabelContainer(prediction) {
@@ -116,22 +118,18 @@ function ekUpload() {
   }
 
   async function fileSelectHandler(e) {
-    // Fetch FileList object
     var files = e.target.files || e.dataTransfer.files;
 
-    // Cancel event and hover styling
     fileDragHover(e);
 
     // Process all File objects
     for (var i = 0, f; (f = files[i]); i++) {
-      // image_loaded = await parseFile(f);
       parseFile(f).then((res) => {
         console.log(res)
         setTimeout(function () {
           model_loaded.then(() => predict());
-        }, 500);// 3초 후에 predict() 실행
+        }, 500);
       })
-      // uploadFile(f);
     }
   }
 

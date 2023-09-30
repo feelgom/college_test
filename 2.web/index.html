@@ -66,15 +66,19 @@
   </section>
 
   <!-- Upload  -->
-  <form id="file-upload-form" class="mt-5 container uploader">
+  <form id="file-upload-form" class="uploader mt-5 container">
     <input id="file-upload" type="file" name="fileUpload" accept="image/*" />
     <label for="file-upload" id="file-drag" class="pt-5 pb-4 image-upload-wrap">
+      <!-- before model loaded -->
+      <div id="waiting">
+        <h3 class="mt-2 upload-text">페이지 로딩 중 입니다</h3>
+        <h3 class="mt-2 upload-text">조금만 기다려주세요~</h3>
+      </div>
 
       <!-- before image uploaded -->
-      <div id="start">
+      <div id="start" class="hidden">
         <img src="img/upload_img.svg" alt="" class="upload-icon">
         <h3 class="mt-2 upload-text">얼굴 사진을 올려놓거나 눌러서 업로드하세요!</h3>
-        <div id="notimage" class="hidden">Please select an image</div>
       </div>
 
       <!-- after image uploaded -->

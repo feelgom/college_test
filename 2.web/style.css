@@ -47,6 +47,10 @@ body {
   margin: 0 auto;
 }
 
+.uploader #waiting.hidden {
+  display: none;
+}
+
 .uploader label.hover #start i.fa {
   transform: scale(0.8);
   opacity: 0.3;
