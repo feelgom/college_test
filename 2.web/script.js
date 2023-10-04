@@ -7,8 +7,24 @@ const URL = "https://teachablemachine.withgoogle.com/models/cCFZeL2dP/";
 
 let model, webcam, labelContainer, maxPredictions;
 
+function makeid(length) {
+  let result = '';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+  let counter = 0;
+  while (counter < length) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    counter += 1;
+  }
+  return result;
+}
+
 // Load the image model and setup the webcam
 async function init() {
+  mixpanel.init('cf5fee70cd4c76e019ca2de33a39937c', { debug: true, track_pageview: true, persistence: 'localStorage' });
+  mixpanel.identify(makeid(5))
+  mixpanel.track('Start model loading')
+
   console.log("start model loading");
   const modelURL = URL + "model.json";
   const metadataURL = URL + "metadata.json";
@@ -20,6 +36,8 @@ async function init() {
     labelContainer.appendChild(document.createElement("div"));
   }
   await console.log("finish model loading");
+  mixpanel.track('finish model loading')
+
   document.getElementById("waiting").classList.add("hidden");
   document.getElementById("start").classList.remove("hidden");
 }
@@ -71,9 +89,18 @@ function makeBarGraph(value, colors) {
 
 async function predict() {
   console.log("start predict()");
+  mixpanel.track('start predict()')
+
   var image = document.getElementById("file-image", false)
   const prediction = await model.predict(image);
   prediction.sort((a, b) => parseFloat(b.probability) - parseFloat(a.probability));
+  
+  mixpanel.track('predictions', {
+    0: prediction[0].className + " - " + (prediction[0].probability * 100).toFixed() + "%",
+    1: prediction[1].className + " - " + (prediction[1].probability * 100).toFixed() + "%",
+    2: prediction[2].className + " - " + (prediction[2].probability * 100).toFixed() + "%",
+    3: prediction[3].className + " - " + (prediction[3].probability * 100).toFixed() + "%",
+  })
 
   const college = prediction[0].probability > 0.3 ? prediction[0].className : "Unknown";
   const messageIndex = Math.floor(Math.random() * comments[college].length);
@@ -83,6 +110,11 @@ async function predict() {
     makeLabelContainer(prediction);
   }
   await console.log("finish predict()");
+  mixpanel.track('finish predict()', {
+    college: college,
+    score: (prediction[0].probability * 100).toFixed(),
+    message: resultMessage
+  })
 }
 
 
@@ -121,6 +153,7 @@ function ekUpload() {
     var files = e.target.files || e.dataTransfer.files;
 
     fileDragHover(e);
+    mixpanel.track('image file uploaded', { file: files[0].name })
 
     // Process all File objects
     for (var i = 0, f; (f = files[i]); i++) {
