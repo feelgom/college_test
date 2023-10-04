@@ -54,7 +54,7 @@ function makeLabelContainer(prediction) {
     barGraphLabel.innerHTML = prediction[i].className;
     barGraphLabel.style = "display:inline-block;color:" + colors[0] + ";"
 
-    var tmBarGraph = makeBarGraph(prediction[i].probability.toFixed(2) * 100, colors);
+    var tmBarGraph = makeBarGraph((prediction[i].probability * 100).toFixed() , colors);
     const barGraphHolder = document.createElement("div");
     barGraphHolder.className = "bar-graph-holder";
     barGraphHolder.appendChild(barGraphLabel);
