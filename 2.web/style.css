@@ -181,8 +181,18 @@ body {
   align-items: center;
   text-align: center;
   text-decoration-line: underline;
-  color: #F73737;
+  color: #42a1fa;
 }
+
+.visit-counter {
+  /* font-family: 'Jua'; */
+  font-size: 0.8rem;
+  line-height: 1.71;
+  align-items: center;
+  text-align: center;
+  color: #000000;
+}
+
 
 .github-icon {
   width: 1.6rem;
@@ -195,7 +205,7 @@ div#disqus_thread iframe[sandbox] {
 .comment {
   text-align: center;
   font-family: "Jua";
-  font-size: 16px;
+  font-size: 1.2rem;
   line-height: 0.2;
   color: #555b68;
 }
